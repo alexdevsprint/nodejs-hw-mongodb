@@ -2,29 +2,30 @@ import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
 
-const app = express();
+export const setupServer = () => {
+  const app = express();
 
-const PORT = 3000;
+  const PORT = 3000;
 
-app.use(
-  pino({
-    transport: {
-      target: 'pino-pretty',
-    },
-  }),
-);
+  app.use(
+    pino({
+      transport: {
+        target: 'pino-pretty',
+      },
+    }),
+  );
 
-app.use(cors());
+  app.use(cors());
 
-app.get('/', (req, res) => {
-  res.json({
-    message: 'Hello world!',
+  app.get('/', (req, res) => {
+    res.json({
+      message: 'Hello world!',
+    });
   });
-});
 
-app.use((req, res, next) => {
+  app.use((req, res) => {
     res.status(404).json({
-      message: 'Not found',
+      message: 'Route not found',
     });
   });
 
@@ -35,6 +36,7 @@ app.use((req, res, next) => {
     });
   });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+};
