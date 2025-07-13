@@ -5,6 +5,9 @@ import cors from 'cors';
 import contactsRouter from './routers/contacts.js';
 // import { getAllContacts, getContactsById } from './services/contacts.js';
 
+import { errorHandler } from './middlewares/errorHandler.js';
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
+
 export const setupServer = () => {
   const app = express();
 
@@ -56,18 +59,22 @@ export const setupServer = () => {
   // });
 
   app.use(contactsRouter);
-  app.use((req, res) => {
-    res.status(404).json({
-      message: 'Route not found',
-    });
-  });
 
-  app.use((err, req, res, next) => {
-    res.status(500).json({
-      message: 'Something went wrong',
-      error: err.message,
-    });
-  });
+  app.use(notFoundHandler);
+  app.use(errorHandler);
+
+  // app.use((req, res) => {
+  //   res.status(404).json({
+  //     message: 'Route not found',
+  //   });
+  // });
+
+  // app.use((err, req, res, next) => {
+  //   res.status(500).json({
+  //     message: 'Something went wrong',
+  //     error: err.message,
+  //   });
+  // });
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
