@@ -1,8 +1,14 @@
 import { getAllContacts, getContactsById } from '../services/contacts.js';
 
-import { createContact, deleteContact, updateContact} from '../services/contacts.js';
+import {
+  createContact,
+  deleteContact,
+  updateContact,
+} from '../services/contacts.js';
 
 import createHttpError from 'http-errors';
+
+import mongoose from 'mongoose';
 
 export const getContactsController = async (req, res) => {
   const contacts = await getAllContacts();
@@ -13,12 +19,18 @@ export const getContactsController = async (req, res) => {
   });
 };
 
-export const getContactByIdController = async (req, res) => {
+export const getContactByIdController = async (req, res, next) => {
   const { contactId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(contactId)) {
+    return next(createHttpError(404, 'Invalid contact ID'));
+  }
+
   const contact = await getContactsById(contactId);
 
   if (!contact) {
     throw createHttpError(404, 'Contact not found');
+    // throw new createHttpError.NotFound("Contact not found");
   }
   // Відповідь, якщо контакт знайдено
   res.status(200).json({
@@ -38,7 +50,7 @@ export const createContactController = async (req, res) => {
   });
 };
 
-export const deleteContactController = async (req, res) => {
+export const deleteContactController = async (req, res, next) => {
   const { contactId } = req.params;
 
   const contact = await deleteContact(contactId);
