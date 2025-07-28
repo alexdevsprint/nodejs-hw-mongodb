@@ -56,3 +56,4 @@ export const updateContactSchema = Joi.object({
 .messages({
   'object.min': 'At least one field must be provided for update',
 });
+
