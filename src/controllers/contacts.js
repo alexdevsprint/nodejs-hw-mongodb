@@ -19,7 +19,6 @@ import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 import { getEnvVar } from '../utils/getEnvVar.js';
 
 export const getContactsController = async (req, res) => {
-  
   const { page, perPage } = parsePaginationParams(req.query);
 
   const { sortBy, sortOrder } = parseSortParams(req.query);
@@ -29,9 +28,8 @@ export const getContactsController = async (req, res) => {
     perPage,
     sortBy,
     sortOrder,
-    userId: req.user._id
-  }
-  );
+    userId: req.user._id,
+  });
   res.status(200).json({
     status: 200,
     message: 'Successfully found contacts!',
@@ -40,7 +38,6 @@ export const getContactsController = async (req, res) => {
 };
 
 export const getContactByIdController = async (req, res, next) => {
-  
   const { contactId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(contactId)) {
@@ -63,7 +60,24 @@ export const getContactByIdController = async (req, res, next) => {
 };
 
 export const createContactController = async (req, res) => {
-  const contact = await createContact({...req.body, userId: req.user._id});
+  console.log('req.file:', req.file);
+  const photo = req.file;
+
+  let photoUrl;
+
+  if (photo) {
+    if (getEnvVar('ENABLE_CLOUDINARY') === 'true') {
+      photoUrl = await saveFileToCloudinary(photo);
+    } else {
+      photoUrl = await saveFileToUploadDir(photo);
+    }
+  }
+
+  const contact = await createContact({
+    ...req.body,
+    userId: req.user._id,
+    photo: photoUrl,
+  });
 
   res.status(201).json({
     status: 201,
@@ -88,28 +102,27 @@ export const deleteContactController = async (req, res, next) => {
 export const patchContactController = async (req, res, next) => {
   const { contactId } = req.params;
   const userId = req.user._id;
-  
-  
 
-   const photo = req.file;
+  const photo = req.file;
 
-   let photoUrl;
+  let photoUrl;
 
   if (photo) {
     if (getEnvVar('ENABLE_CLOUDINARY') === 'true') {
       photoUrl = await saveFileToCloudinary(photo);
     } else {
-    photoUrl = await saveFileToUploadDir(photo);
+      photoUrl = await saveFileToUploadDir(photo);
     }
   }
-// const result = await updateContact(contactId, req.body, userId);
-  const result = await updateContact(contactId, {
-    ...req.body,
-    photo: photoUrl,
-  }, userId);
-
-
-
+  // const result = await updateContact(contactId, req.body, userId);
+  const result = await updateContact(
+    contactId,
+    {
+      ...req.body,
+      photo: photoUrl,
+    },
+    userId,
+  );
 
   if (!result) {
     next(createHttpError(404, 'Contact not found'));
