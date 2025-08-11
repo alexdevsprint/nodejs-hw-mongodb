@@ -15,6 +15,10 @@ servers:
   - url: http://localhost:3000
   - url: https://nodejs-hw-mongodb-swagger-egc4.onrender.com #посилання на задеплоєний сайт
 paths:
+  /students:
+    get:
+      $ref: ../swagger/paths/contacts/get.yam
+
   /contacts/{id}:
     get:
       $ref: ../swagger/paths/contacts/{id}/get.yaml
