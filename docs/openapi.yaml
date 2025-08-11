@@ -9,8 +9,7 @@ info:
     <опис вашого додатку>
 tags:
   - name: Contacts
-    description: Operations about contacts.
-  
+    description: Operations about contacts.  
   # теги, що ви будете використовувати
 servers:
   - url: http://localhost:3000

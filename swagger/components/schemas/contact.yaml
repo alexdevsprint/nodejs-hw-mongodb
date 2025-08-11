@@ -2,40 +2,47 @@ type: object
 required:
   - _id
   - name
-  - age
-  - gender
-  - avgMark
-  - onDuty
+  - phoneNumber
+  - contactType
+  - userId  
 properties:
   _id:
-    description: "Student's id"
+    description: "Contact's id"
     type: string
     example: 65e4decdd286b30065d54af9
   name:
-    description: "Student's name"
+    description: "Contact's name"
     type: string
     example: 'John Doe'
-  age:
-    description: "Student's age"
-    type: number
-    example: 12
-  gender:
-    description: "Student's age"
+  phoneNumber:
+    description: "Contact's phone number"
     type: string
-    enum: ['male', 'female', 'other']
-  avgMark:
-    description: "Student's average mark. Should be between 1 and 12"
-    type: number
-    example: 9.7
-  onDuty:
-    description: 'Whether is student on duty'
+    example: '+3809991010'  
+  email:
+    description: "Contact's email"
+    type: string
+    example: test@gmail.com
+  contactType:
+    description: "Contact's type"
+    type: string
+    enum: ['work', 'home', 'personal']
+  isFavourite:
+    description: "Is contact favourite?"
     type: boolean
     example: false
-  parentId:
-    description: "Student's parent id"
+  timestamps:
+    description: ''
+    type: boolean
+    example: true
+  versionKey:
+    description: ''
+    type: boolean
+    example: false
+  userId:
+    description: "ID of the user who owns this contact"
     type: string
     example: 65e4decdd286b30065d54af9
   photo:
-    description: "Link to student's photo"
+    description: "Link to contact's photo"
     type: string
     example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
