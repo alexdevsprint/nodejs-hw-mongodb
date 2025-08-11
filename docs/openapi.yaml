@@ -17,7 +17,7 @@ servers:
 paths:
   /students:
     get:
-      $ref: ../swagger/paths/contacts/get.yam
+      $ref: ../swagger/paths/contacts/get.yaml
 
   /contacts/{id}:
     get:

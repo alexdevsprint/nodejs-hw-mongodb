@@ -2,6 +2,8 @@ tags:
   - Contacts
 summary: Get list of contacts
 operationId: getContacts
+
+#Request
 description: 'Get list of users with this endpoint'
 security:
   - bearerAuth: []
@@ -34,7 +36,7 @@ parameters:
       type: string
       enum: ['work', 'home', 'personal']
       example: home
-
+#Responses
 responses:
   '200':
     description: Successfully found contacts!

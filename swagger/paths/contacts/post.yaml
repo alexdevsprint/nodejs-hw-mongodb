@@ -2,6 +2,7 @@ tags:
   - Contacts
 summary: Create contact
 operationId: createContact
+#Request
 description: 'Create a contact with payload'
 security:
   - bearerAuth: []
@@ -39,6 +40,7 @@ requestBody:
             description: "Link to contact's photo"
             type: string
             example: https://res.cloudinary.com/uqwgdu/image/upload/image.png     
+#Responses
 responses:
   '201':
     description: Creates a contact
