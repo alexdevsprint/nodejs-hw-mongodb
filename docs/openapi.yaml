@@ -6,8 +6,7 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   description:
-    API documentation
-    <опис вашого додатку>
+    API documentation    
 tags:
   - name: Contacts
     description: Operations about contacts.  
