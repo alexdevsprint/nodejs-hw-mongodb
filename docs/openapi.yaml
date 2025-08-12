@@ -14,22 +14,23 @@ tags:
 servers:
   - url: http://localhost:3000
   - url: https://nodejs-hw-mongodb-swagger-egc4.onrender.com #посилання на задеплоєний сайт
-paths:
-  /students:
+paths:  
+  /contacts:
     get:
       $ref: ../swagger/paths/contacts/get.yaml
-
-  /contacts/{id}:
-    get:
-      $ref: ../swagger/paths/contacts/{id}/get.yaml
-
-  /contacts:
     post:
       $ref: ../swagger/paths/contacts/post.yaml
+
+  /contacts/{id}:    
+    get:
+      $ref: ../swagger/paths/contacts/{id}/get.yaml
     delete:
-      $ref: '../swagger/paths/contacts/{id}/delete.yaml'
+       $ref: '../swagger/paths/contacts/{id}/delete.yaml'
     patch:
-      $ref: '../swagger/paths/contacts/{id}/patch.yaml'
+       $ref: '../swagger/paths/contacts/{id}/patch.yaml'
+
+  
+    
   # тут будуть посилання на ендпоінти
 components:
   securitySchemes:
